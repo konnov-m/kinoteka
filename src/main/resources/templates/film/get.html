@@ -1,0 +1,38 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Film</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Bootstrap CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!-- Bootstrap Bundle JS-->
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+</head>
+
+<div th:replace="header :: content"></div>
+
+<body>
+<div class="container">
+    <div th:if="${film != null}" class="mb-3" th:object="${film}">
+        <h4 class="d-flex justify-content-left" th:text="*{title}">VALUE</h4>
+
+        <p class="text-left" th:text="*{'Year: ' + year}">TEXT</p>
+        <p class="text-left" th:text="*{'Duration: ' + duration}">TEXT</p>
+        <a th:href="@{/director/{id}(id=*{director.id})}">
+            <p class="text-left" th:text="*{'Director: ' + director.surname + ' ' + director.name}">TEXT</p>
+        </a>
+
+        <h5>Actors:</h5>
+        <div th:each="actor : *{actors}">
+            <a th:href="@{/actor/{id}(id=${actor.id})}">
+                <div th:text="${actor.surname + ' ' + actor.name + ' '}"></div>
+            </a>
+
+        </div>
+
+
+    </div>
+</div>
+
+</body>
+</html>
