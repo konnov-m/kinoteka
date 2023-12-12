@@ -17,6 +17,17 @@
         <h6 class="mt-3"> Здесь будут все сериалы. </h6>
     </div>
 
+    <div class="row">
+        <div th:if="${serials != null}" th:each="serial : ${serials}" class="card" style="width: 18rem;">
+            <img src="https://i.pinimg.com/564x/73/b6/6d/73b66d9790c99f0bb027f5197e94870b.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 th:text="${serial.title}" class="card-title">Заголовок карточки</h5>
+                <!--                <p class="card-text">Небольшой пример текста, который должен основываться на названии карточки и составлять основную часть содержимого карты.</p>-->
+                <a th:href="@{/series/{id}(id=${serial.id})}" class="btn btn-primary">Перейти к сериалу</a>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 </body>

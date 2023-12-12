@@ -96,17 +96,17 @@ CREATE TABLE genres(
 );
 
 CREATE TABLE critics_films_reviews(
+	id SERIAL PRIMARY KEY,
 	critic_id INTEGER NOT NULL REFERENCES users(id),
 	film_id INTEGER NOT NULL REFERENCES films(id),
-	review varchar(1024) not null,
-	PRIMARY KEY(critic_id, film_id)
+	review varchar(1024) not null
 );
 
 CREATE TABLE critics_tv_series_episodes_reviews(
+	id SERIAL PRIMARY KEY,
 	critic_id INTEGER NOT NULL REFERENCES users(id),
 	tv_series_episode_id CHAR(6) NOT NULL REFERENCES tv_series_episodes(id),
-	review varchar(1024) not null,
-	PRIMARY KEY(critic_id, tv_series_episode_id)
+	review varchar(1024) not null
 );
 
 CREATE TABLE streamings_films(

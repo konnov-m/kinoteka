@@ -66,8 +66,8 @@ INSERT INTO genres (id, name) VALUES
 INSERT INTO critics_films_reviews (critic_id, film_id, review) VALUES
 (1, 1, 'Офигенный фильм, Киллиан Мерфи Острый пузырек - топ актер');
 
-INSERT INTO critics_tv_series_episodes_reviews (critic_id, tv_series_episode_id, review) VALUES
-(1, 's01e01', 'С этой серии началась великая сага о Вестеросе');
+INSERT INTO critics_tv_series_episodes_reviews (id, critic_id, tv_series_episode_id, review) VALUES
+(1, 1, 's01e01', 'С этой серии началась великая сага о Вестеросе');
 
 INSERT INTO streamings_films (film_id, streaming_id, rating, in_subscription) VALUES
 (1, 2, '9.8', TRUE);

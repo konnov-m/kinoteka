@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "directors")
@@ -37,6 +38,11 @@ public class Director {
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "director")
-    private Film film;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "director")
+    private List<Film> film;
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "director")
+    private List<Episode> serial;
 }

@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Entity
 @Table(name = "genres")
 @Getter
@@ -22,4 +24,15 @@ public class Genre {
 
     private String name;
 
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToMany(mappedBy = "genres", fetch = FetchType.EAGER)
+    private List<Film> films;
+
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToMany(mappedBy = "genres", fetch = FetchType.EAGER)
+    private List<Series> series;
 }

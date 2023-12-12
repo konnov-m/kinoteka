@@ -40,4 +40,9 @@ public class Actor {
     @ToString.Exclude
     @ManyToMany(mappedBy = "actors", fetch = FetchType.EAGER)
     private Set<Film> films;
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToMany(mappedBy = "actors", fetch = FetchType.EAGER)
+    private Set<Episode> episodes;
 }

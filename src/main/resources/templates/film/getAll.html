@@ -13,9 +13,21 @@
 
 <body>
 <div class="container">
-    <div class="mb-3">
-        <h6 class="mt-3"> Здесь будут все фильмы. </h6>
+<!--    <div class="mb-3">-->
+<!--        <h6 class="mt-3"> Здесь будут все фильмы. </h6>-->
+<!--    </div>-->
+
+    <div class="row">
+        <div th:if="${films != null}" th:each="film : ${films}" class="card" style="width: 18rem;">
+            <img src="https://i.pinimg.com/564x/73/b6/6d/73b66d9790c99f0bb027f5197e94870b.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 th:text="${film.title}" class="card-title">Заголовок карточки</h5>
+<!--                <p class="card-text">Небольшой пример текста, который должен основываться на названии карточки и составлять основную часть содержимого карты.</p>-->
+                <a th:href="@{/film/{id}(id=${film.id})}" class="btn btn-primary">Перейти к фильму</a>
+            </div>
+        </div>
     </div>
+
 
 </div>
 

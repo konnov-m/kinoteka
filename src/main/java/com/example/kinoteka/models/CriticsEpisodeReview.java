@@ -1,40 +1,34 @@
 package com.example.kinoteka.models;
 
-
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.List;
-
 @Entity
-@Table(name = "streaming_services")
+@Table(name = "critics_tv_series_episodes_reviews")
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode
-public class StreamingService {
-
+public class CriticsEpisodeReview {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
 
-    private String name;
-
-    private String owner;
-
-    private Float rating;
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "critic_id")
+    private User critic;
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @ManyToMany(mappedBy = "services", fetch = FetchType.EAGER)
-    private List<Film> films;
+    @ManyToOne
+    @JoinColumn(name = "tv_series_episode_id")
+    private Episode episode;
 
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @ManyToMany(mappedBy = "services", fetch = FetchType.EAGER)
-    private List<Series> series;
+    @Column(name = "review")
+    private String review;
 }
