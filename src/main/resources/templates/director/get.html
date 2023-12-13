@@ -14,7 +14,31 @@
 <body>
 <div class="container">
     <div class="mb-3">
-        <p th:text="${director.toString()}">VALUE</p>
+<!--        <p th:text="${director.toString()}">VALUE</p>-->
+        <h5 th:text="*{director.surname + ' ' + director.name}"></h5>
+<!--        <p class="text-left" th:text="*{director.surname + ' ' + director.name}">TEXT</p>-->
+        <p class="text-left" th:text="*{'Sex: ' + director.sex}">TEXT</p>
+        <p class="text-left" th:text="*{'Birthday: ' + director.birthday + ' (' + director.zodiac + ')'}">TEXT</p>
+        <p class="text-left" th:text="*{'Birthplace: ' + director.birthplace}">TEXT</p>
+
+        <div th:if="${not director.film.isEmpty()}">
+            <h5>Films:</h5>
+            <div th:each="film : ${director.film}">
+                <a th:href="@{/film/{id}(id=${film.id})}">
+                    <div th:text="${film.title + ' '}"></div>
+                </a>
+            </div>
+        </div>
+
+        <div th:if="${not director.getSeries().isEmpty()}">
+            <h5>Series:</h5>
+            <div th:each="series : ${director.getSeries()}">
+                <a th:href="@{/series/{id}(id=${series.id})}">
+                    <div th:text="${series.title + ' '}"></div>
+                </a>
+            </div>
+        </div>
+
     </div>
 </div>
 

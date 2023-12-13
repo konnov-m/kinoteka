@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -45,4 +46,15 @@ public class Actor {
     @ToString.Exclude
     @ManyToMany(mappedBy = "actors", fetch = FetchType.EAGER)
     private Set<Episode> episodes;
+
+
+    public Set<Series> getSeries () {
+        Set<Series> set = new HashSet<>();
+        for (Episode ep : episodes) {
+            set.add(ep.getSeries());
+        }
+        return set;
+    }
+
+
 }

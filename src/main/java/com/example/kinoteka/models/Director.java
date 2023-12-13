@@ -8,7 +8,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "directors")
@@ -44,5 +46,14 @@ public class Director {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "director")
-    private List<Episode> serial;
+    private List<Episode> episodes;
+
+
+    public Set<Series> getSeries () {
+        Set<Series> set = new HashSet<>();
+        for (Episode ep : episodes) {
+            set.add(ep.getSeries());
+        }
+        return set;
+    }
 }
