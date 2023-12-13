@@ -1,5 +1,5 @@
 # Build
-Инициализация базы данных. База должна называться kinoteka. Если название другое, надо поменять application.properties параметр spring.datasource.url
+Инициализируйте базу данных. База должна называться kinoteka. Если название другое, надо поменять в [application.properties](src%2Fmain%2Fresources%2Fapplication.properties) параметр spring.datasource.url
 Скрипты для создания и инициализации базы данных лежат в kinoteka/sqlScripts/
 
 Собираем jar:
