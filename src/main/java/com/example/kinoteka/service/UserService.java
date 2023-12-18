@@ -12,13 +12,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
 
     private UserRepository userRepository;
-    private PermissionService roleService;
+    private PermissionService permissionService;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -28,7 +29,7 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     public void setRoleService(PermissionService roleService) {
-        this.roleService = roleService;
+        this.permissionService = roleService;
     }
 
     @Autowired
@@ -54,6 +55,8 @@ public class UserService implements UserDetailsService {
     }
 
     public User createNewUser(User user) {
+        user.setPermissions(Set.of(permissionService.getUserPermission()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
