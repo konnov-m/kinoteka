@@ -53,4 +53,8 @@ public class UserService implements UserDetailsService {
         );
     }
 
+    public User createNewUser(User user) {
+        return userRepository.save(user);
+    }
+
 }
