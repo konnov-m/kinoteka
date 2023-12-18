@@ -77,7 +77,7 @@ INSERT INTO tv_series_episodes (id, title, director_id, tv_series_id) VALUES
 
 INSERT INTO users (id, login, password, name, surname, patronymic, birthday, sex) VALUES
 (1, 'rarelywherevervacant@dot.com', '2AultRylC8qkVGeFauycauZ7yVtG2UFg', 'Илья', 'Оразов', 'Витальевич', '21.02.2002', 'm'),
-(2,'gmail@com.dot', 'qwerty22', 'Михаил', 'Коннов', 'Юрьевич', '28.06.2002', 'm'),
+(2, 'gmail@com.dot', 'qwerty22', 'Михаил', 'Коннов', 'Юрьевич', '28.06.2002', 'm'),
 (3, 'email@com.dot', 'qwerty22', 'Кирилл', 'Волков', 'Юрьевич', '20.11.2002', 'm');
 
 INSERT INTO permissions (id, name) VALUES
@@ -144,7 +144,7 @@ INSERT INTO tv_series_episodes_actors (tv_series_episode_id, actor_id, role, tv_
 ('3s01e01', 10, 'Уолтер Белый', 3);
 
 INSERT INTO users_permissions (user_id, permission_id) VALUES
-(2, 1), (3, 1);
+(2, 1), (3, 1), (2, 3);
 
 INSERT INTO films_genres (film_id, genre_id) VALUES
 (1, 1), (2, 3), (3, 3), (4, 6), (5, 5);
