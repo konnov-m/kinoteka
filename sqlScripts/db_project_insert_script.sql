@@ -82,8 +82,8 @@ INSERT INTO users (id, login, password, name, surname, patronymic, birthday, sex
 
 INSERT INTO permissions (id, name) VALUES
 (1, 'critic'),
-(2, 'critic'),
-(3, 'critic');
+(2, 'ROLE_USER'),
+(3, 'ROLE_ADMIN');
 
 INSERT INTO streaming_services (id, name, rating, owner) VALUES
 (1, 'HBO MAX', '9.2', 'HBO'),
