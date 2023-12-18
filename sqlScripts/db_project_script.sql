@@ -28,6 +28,38 @@ CREATE TABLE directors(
 	zodiac varchar(256)
 );
 
+CREATE OR REPLACE FUNCTION insert_zodiac()
+RETURNS TRIGGER
+LANGUAGE PLPGSQL
+AS $$
+BEGIN
+	NEW.zodiac :=
+	CASE
+		WHEN(EXTRACT(MONTH FROM NEW.birthday) = 3 AND EXTRACT(DAY FROM NEW.birthday) >= 21) OR (EXTRACT(MONTH FROM NEW.birthday) = 4 AND EXTRACT(DAY FROM NEW.birthday) <= 20) THEN 'Овен'
+		WHEN(EXTRACT(MONTH FROM NEW.birthday) = 4 AND EXTRACT(DAY FROM NEW.birthday) >= 21) OR (EXTRACT(MONTH FROM NEW.birthday) = 5 AND EXTRACT(DAY FROM NEW.birthday) <= 20) THEN 'Телец'
+		WHEN(EXTRACT(MONTH FROM NEW.birthday) = 5 AND EXTRACT(DAY FROM NEW.birthday) >= 21) OR (EXTRACT(MONTH FROM NEW.birthday) = 6 AND EXTRACT(DAY FROM NEW.birthday) <= 21) THEN 'Близнецы'
+		WHEN(EXTRACT(MONTH FROM NEW.birthday) = 6 AND EXTRACT(DAY FROM NEW.birthday) >= 22) OR (EXTRACT(MONTH FROM NEW.birthday) = 7 AND EXTRACT(DAY FROM NEW.birthday) <= 22) THEN 'Рак'
+		WHEN(EXTRACT(MONTH FROM NEW.birthday) = 7 AND EXTRACT(DAY FROM NEW.birthday) >= 23) OR (EXTRACT(MONTH FROM NEW.birthday) = 8 AND EXTRACT(DAY FROM NEW.birthday) <= 23) THEN 'Лев'
+		WHEN(EXTRACT(MONTH FROM NEW.birthday) = 8 AND EXTRACT(DAY FROM NEW.birthday) >= 24) OR (EXTRACT(MONTH FROM NEW.birthday) = 9 AND EXTRACT(DAY FROM NEW.birthday) <= 23) THEN 'Дева'
+		WHEN(EXTRACT(MONTH FROM NEW.birthday) = 9 AND EXTRACT(DAY FROM NEW.birthday) >= 24) OR (EXTRACT(MONTH FROM NEW.birthday) = 10 AND EXTRACT(DAY FROM NEW.birthday) <= 23) THEN 'Весы'
+		WHEN(EXTRACT(MONTH FROM NEW.birthday) = 10 AND EXTRACT(DAY FROM NEW.birthday) >= 24) OR (EXTRACT(MONTH FROM NEW.birthday) = 11 AND EXTRACT(DAY FROM NEW.birthday) <= 22) THEN 'Скорпион'
+		WHEN(EXTRACT(MONTH FROM NEW.birthday) = 11 AND EXTRACT(DAY FROM NEW.birthday) >= 23) OR (EXTRACT(MONTH FROM NEW.birthday) = 12 AND EXTRACT(DAY FROM NEW.birthday) <= 21) THEN 'Стрелец'
+		WHEN(EXTRACT(MONTH FROM NEW.birthday) = 12 AND EXTRACT(DAY FROM NEW.birthday) >= 22) OR (EXTRACT(MONTH FROM NEW.birthday) = 1 AND EXTRACT(DAY FROM NEW.birthday) <= 20) THEN 'Козерог'
+		WHEN(EXTRACT(MONTH FROM NEW.birthday) = 1 AND EXTRACT(DAY FROM NEW.birthday) >= 21) OR (EXTRACT(MONTH FROM NEW.birthday) = 2 AND EXTRACT(DAY FROM NEW.birthday) <= 20) THEN 'Водолей'
+		WHEN(EXTRACT(MONTH FROM NEW.birthday) = 2 AND EXTRACT(DAY FROM NEW.birthday) >= 21) OR (EXTRACT(MONTH FROM NEW.birthday) = 3 AND EXTRACT(DAY FROM NEW.birthday) <= 20) THEN 'Рыбы'
+		ELSE '-'
+	END;
+
+	RETURN NEW;
+END;
+$$;
+
+CREATE  TRIGGER insert_director
+BEFORE INSERT ON directors
+FOR EACH ROW
+EXECUTE PROCEDURE insert_zodiac();
+
+
 CREATE TABLE actors(
 	id SERIAL PRIMARY KEY,
 	name varchar(256) not null,
@@ -39,6 +71,11 @@ CREATE TABLE actors(
 	zodiac varchar(256)
 );
 
+CREATE  TRIGGER insert_actors
+BEFORE INSERT ON actors
+FOR EACH ROW
+EXECUTE PROCEDURE insert_zodiac();
+
 CREATE TABLE films(
 	id SERIAL PRIMARY KEY,
 	title varchar(256) not null,
@@ -46,6 +83,8 @@ CREATE TABLE films(
 	duration TIME not null,
 	director_id INTEGER NOT NULL REFERENCES directors(id)
 );
+
+CREATE INDEX films_title ON films (title);
 
 CREATE TABLE tv_series(
 	id SERIAL PRIMARY KEY,
@@ -56,8 +95,10 @@ CREATE TABLE tv_series(
 	company varchar(256) not null
 );
 
+CREATE INDEX tv_series_title ON tv_series (title);
+
 CREATE TABLE tv_series_episodes(
-	id CHAR(6) PRIMARY KEY,
+	id CHAR(7) PRIMARY KEY,
 	title VARCHAR(256) not null,
 	director_id INTEGER NOT NULL REFERENCES directors(id),
 	tv_series_id INTEGER NOT NULL REFERENCES tv_series(id)
@@ -66,7 +107,7 @@ CREATE TABLE tv_series_episodes(
 CREATE TABLE users(
 	id SERIAL PRIMARY KEY,
 	login varchar(256) not null,
-	password varchar(1024) not null, 
+	password varchar(1024) not null,
 	name varchar(256) not null,
 	surname varchar(256) not null,
 	patronymic varchar(256),
@@ -105,7 +146,7 @@ CREATE TABLE critics_films_reviews(
 CREATE TABLE critics_tv_series_episodes_reviews(
 	id SERIAL PRIMARY KEY,
 	critic_id INTEGER NOT NULL REFERENCES users(id),
-	tv_series_episode_id CHAR(6) NOT NULL REFERENCES tv_series_episodes(id),
+	tv_series_episode_id CHAR(7) NOT NULL REFERENCES tv_series_episodes(id),
 	review varchar(1024) not null
 );
 
@@ -133,7 +174,7 @@ CREATE TABLE films_actors(
 );
 
 CREATE TABLE tv_series_episodes_actors(
-	tv_series_episode_id CHAR(6) NOT NULL REFERENCES tv_series_episodes(id),
+	tv_series_episode_id CHAR(7) NOT NULL REFERENCES tv_series_episodes(id),
 	actor_id INTEGER NOT NULL REFERENCES actors(id),
 	tv_series_id integer NOT NULL REFERENCES tv_series(id),
 	role varchar(256),
@@ -157,6 +198,3 @@ CREATE TABLE tv_series_genres(
 	genre_id INTEGER NOT NULL REFERENCES genres(id),
 	PRIMARY KEY(tv_series_id, genre_id)
 );
-
-
-
